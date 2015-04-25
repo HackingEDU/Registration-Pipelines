@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Parsing New TypeForm</title>  
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+	<div id='list'><div>
+</body>
+
+<script type="text/javascript">
+      var API_KEY = '';
+      $.ajax({
+            url:'https://api.typeform.com/v0/form/Vub48x?key=' + API_KEY +'&completed=true'
+            //need to add 'offset=#' as can only grab 1000 rows at once
+      })
+      .done(function(d){
+            console.log(d.responses);
+            $('#list').append("Email, first Name, Last Name, School, Shirt Size, id, gender, req. transportation, ed tech job, first hackathon, submit day, waiver, address\n");
+            for(var i in d.responses){
+                  var item = d.responses[i].answers;
+                  var response = (item.email_4594064);//first name
+                  response += ", " + item.textfield_4594060.split(" ")[0];
+                  response += ", " + item.textfield_4594060.split(" ")[1];//mail
+                  response += ", " + item.textfield_4594061;//School
+                  response += ", " + item.list_4594067_choice;//Shirt Size
+                  response += ", " + d.responses[i].id;//id
+                  response += ", " + item.list_4594066_choice_5324758;//gender
+                  response += ", " + item.yesno_4594070;//transportation
+                  response += ", " + item.yesno_4594071;//ed tech
+                  response += ", " + item.yesno_4594069;//first hackathon
+                  response += ", " + d.responses[i].metadata.date_submit;//submit day
+                  response += ", " + item.terms_5534721;//waiver if there        
+                  response += ", " + item.textarea_4594065;//address if there
+                  console.log(response);
+                  $('#list').append("<br>" + response + "\n");
+            }
+      });
+      </script>
+
+</html>

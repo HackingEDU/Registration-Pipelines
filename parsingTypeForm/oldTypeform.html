@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Parsing Old TypeForm</title>  
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+	<div id='list'><div>
+</body>
+
+<script type="text/javascript">
+	var oldTypeFormAPI_KEY = '';
+	$.ajax({
+	 url:'https://api.typeform.com/v0/form/w6qOJT?key=' + oldTypeFormAPI_KEY + '&completed=true'
+	})
+	.done(function(d){
+	  console.log(d.responses)
+	  $('#list').append("First Name, Email, School, Shirt Size, id, gender, transportation, ed tech, first hackathon, submit day, address, waiver\n");
+	  for(i in d.responses){
+      var item = d.responses[i].answers
+      var response = (item.email_4467633);//first name
+      response += ", " + item.textfield_4435014;//Email
+      response += ", " + item.textfield_4435017;//School
+      response += ", " + item.list_4435536_choice;//Shirt Size
+      response += ", " + d.responses[i].id;//id
+      response += ", " + item.list_4435050_choice_5201035;//gender
+      response += ", " + item.yesno_4467661;//transportation
+      response += ", " + item.yesno_4435052;//ed tech
+      response += ", " + item.yesno_4435124;//first hackathon
+      response += ", " + d.responses[i].metadata.date_submit;//submit day
+      //address if there
+      //waiver if there
+      console.log(response)
+      $('#list').append("<br>" + response + "\n")
+	  }
+	});
+</script>
+
+</html>
